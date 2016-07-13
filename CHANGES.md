@@ -1,3 +1,6 @@
+## 0.0.1
+
+* [COMPILE] [PUBLISH] 0.0.1
 * [ADD] [DOCS] [NODE-PERSIST] scene 1
 * [ADD] [DOCS] [REACT] scene 2
 * [ADD] [DOCS] [REACT] scene 1
