@@ -4,10 +4,12 @@ Redux service to request and store multiple user geolocation
 * Service architecture (redux-manager powered)
 * Journaling (redux-journal powered)
 * PouchDB persist state (pouch-redux-middleware powered)
+
 ## INSTALL
 ### Stable: ```npm i -S redux-location```
 ### Dev: ```npm i -S lokhmakov/redux-location```
-## Exampples
+
+## Examples
 ### REACT `npm run react`
 ![alt tag](https://raw.githubusercontent.com/lokhmakov/redux-location/master/docs/redux-location%20react%20scene%201.gif)
 
