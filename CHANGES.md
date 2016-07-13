@@ -1,3 +1,9 @@
+## 0.0.3
+
+* [COMPILE] [PUBLISH] 0.0.3
+* [FIX] Miss lib! )
+* [FIX] README difference between npmjs and github Markdown enigne
+
 ## 0.0.2
 
 * [COMPILE] [PUBLISH] 0.0.2
@@ -18,6 +24,3 @@ npm i -D babel-core babel-loader babel-polyfill babel-preset-es2015 babel-preset
 * [ADD] [DEP]
 
 npm i -S bluebird cuid detect-node redux redux-journal redux-manager redux-saga
-
-
-
