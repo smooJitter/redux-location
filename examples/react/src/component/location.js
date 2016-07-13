@@ -21,8 +21,6 @@ class Location extends React.Component {
     const state = this.serviceState()
     const badgeContent = state ? locationSelect.docsNumber(state) : 0
 
-    //console.log(locationSelect.first(state))
-
     return (
       <Badge
         {...{ badgeContent }}
