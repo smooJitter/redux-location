@@ -1,5 +1,10 @@
-## redux-location [![NPM version][npm-image]][npm-url] [![Gitter][gitter-image]][gitter-url]
+## redux-location [![NPM version][npm-image]][npm-url] [![Discord][discord-image]][discord-url]
+===============================================================================================
 Redux service to request and store multiple user geolocation
+
+![alt tag](https://raw.githubusercontent.com/lokhmakov/redux-location/master/docs/redux-location%20react%20scene%201.gif)
+
+![alt tag](https://raw.githubusercontent.com/lokhmakov/redux-location/master/docs/redux-location%20react%20scene%202.gif)
 
 ## FEATURES
 * Service architecture (redux-manager powered)
@@ -12,13 +17,9 @@ Redux service to request and store multiple user geolocation
 ### Dev
 `npm i -S lokhmakov/redux-location`
 
-## Examples
+## EXAMPLES
 ### REACT
 `npm run react`
-
-![alt tag](https://raw.githubusercontent.com/lokhmakov/redux-location/master/docs/redux-location%20react%20scene%201.gif)
-
-![alt tag](https://raw.githubusercontent.com/lokhmakov/redux-location/master/docs/redux-location%20react%20scene%202.gif)
 
 #### client.js
 ```js
@@ -136,5 +137,5 @@ manager.dispatch(locationActions.insert({ lat: 'latitude', lng: 'longitude' }), 
 [npm-url]: https://npmjs.org/package/redux-location
 [npm-image]: https://img.shields.io/npm/v/redux-location.svg?style=flat
 
-[gitter-url]: https://gitter.im/lokhmakov/redux-manager?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
+[discord-url]: https://discord.gg/CSJq3CU
+[discord-image]: https://discordapp.com/api/servers/203409883263926272/widget.png?style=button
