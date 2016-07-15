@@ -1,3 +1,6 @@
+* [REFACTOR] Switch from pouch-redux-middleware to redux-manager/middleware/middleware.pouch
+* [ADD] React components as part of lib
+
 ## 0.0.3
 
 * [COMPILE] [PUBLISH] 0.0.3

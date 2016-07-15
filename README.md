@@ -9,8 +9,9 @@ Redux service to request and store multiple user geolocation
 ## INSTALL
 ### Stable
 `npm i -S redux-location`
-### Dev:
+### Dev
 `npm i -S lokhmakov/redux-location`
+
 ## Examples
 ### REACT
 `npm run react`

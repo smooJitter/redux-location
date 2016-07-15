@@ -1,10 +1,14 @@
-import PouchMiddleware            from 'pouch-redux-middleware'
 import { manager }                from 'redux-manager'
-import { configMiddlewarePouch }  from './middleware/middleware.pouch'
-import { PERSIST }                from './config'
+import { configMiddlewarePouch }  from 'redux-manager'
+import { PERSIST, SERVICE }       from './config'
+import { types }                  from './actions'
 
-export const configPersist = ({ db, services }) => manager.middleware.set(PERSIST,
-  PouchMiddleware(configMiddlewarePouch({
-    db, services
-  }))
-)
+export const configPersist = ({ db, serviceList = [SERVICE] }) => {
+  let services = {}
+  serviceList.map(serviceName => services[serviceName] = {
+    INSERT: types.INSERT,
+    REMOVE: types.REMOVE,
+    UPDATE: types.UPDATE
+  })
+  manager.middleware.set(PERSIST, configMiddlewarePouch({ db, services }))
+}

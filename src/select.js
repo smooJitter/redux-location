@@ -1,8 +1,17 @@
-const configSelect = () => {
-  const docsNumber = (state) => state.docs.length
-  const first = (state) => state.docs[0] || {}
+export const select = (state) => {
+  const status = ()      => state.status.value
+  const error  = ()      => state.status.error
 
-  return { docsNumber, first }
+  let docs = {}
+  docs.byIndex = (index) => state.docs[index]
+  docs.first   = ()      => state.docs[0]
+  docs.last    = ()      => state.docs[state.docs.length - 1]
+  docs.length  = ()      => state.docs.length
+
+  let config = {}
+  config.docsMax           = () => state.config.docsMax
+  config.docsMaxOverRemove = () => state.config.docsMaxOverRemove
+
+  return { config, docs, status, error }
 }
 
-export const select = configSelect()

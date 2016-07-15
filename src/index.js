@@ -1,5 +1,4 @@
 import { configAPILocal }         from './api/api.local'
-import { configMiddlewarePouch }  from './middleware/middleware.pouch'
 import { configServiceLocal }     from './service/service.local'
 
 import { types, actions }         from './actions'
@@ -14,7 +13,6 @@ export {
   actions               as locationActions, actions,
   config                as locationConfig, config,
   configAPILocal        as locationConfigAPILocal, configAPILocal,
-  configMiddlewarePouch as locationConfigMiddlewarePouch, configMiddlewarePouch,
   configPersist         as locationPersist, configPersist,
   configServiceLocal    as locationLocal, configServiceLocal,
   configSaga            as locationConfigureSaga, configSaga,

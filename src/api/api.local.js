@@ -5,14 +5,14 @@ import { TAGS }         from '../config'
 
 const tags = `${TAGS}.api.local`
 
-const configAPILocal = () => {
+export const configAPILocal = () => {
   const locate = () => new Promise((resolve, reject) => {
-    write('', `${tags}.locate()`)
+    write('', `${tags}.locate`)
     if (isNode) return reject(new Error('Your platform does not support geolocation'))
     navigator.geolocation.getCurrentPosition((result) => {
       const { coords: { latitude, longitude }} = result
       const position = { lat: latitude, lng: longitude }
-      write(`resolve(position = ${JSON.stringify(position)})`, `${tags}.locate()`)
+      write(`resolve(position = ${JSON.stringify(position)})`, `${tags}.locate`)
       resolve(position)
     }, (_error) => {
       error(_error, `${tags}.locate()`)
@@ -25,5 +25,3 @@ const configAPILocal = () => {
 
   return { locate }
 }
-
-export { configAPILocal }

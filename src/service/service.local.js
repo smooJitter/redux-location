@@ -6,8 +6,11 @@ import { configAPILocal }     from '../api/api.local'
 
 const tags = `${TAGS}.service.local`
 
-export const configServiceLocal = (serviceName = SERVICE) => {
-  write(`(serviceName = '${serviceName}')`, `${tags}.configServiceLocal`)
+export const configServiceLocal = (
+  { serviceName = SERVICE } =
+  { serviceName:  SERVICE }
+) => {
+  write(`({ serviceName = '${serviceName}' })`, `${tags}.configServiceLocal`)
   prepareStore(serviceName)
   return manager.api.set(serviceName, configAPILocal())
 }

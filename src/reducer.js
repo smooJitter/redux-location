@@ -1,34 +1,32 @@
 import cuid                 from 'cuid'
-import { combineReducers }  from 'redux'
 import { types }            from './actions'
 
 const initial = {
-  status: { value: '', error: '' },
-  docs: []
+  config: {
+    docsMax: 2,
+    docsMaxOverRemove: true
+  },
+  docs: [],
+  status: { value: '', error: '' }
 }
 
-const configReducer = () => {
-  const status = (state = initial.status, action) => {
-    const { payload } = action
-    switch (action.type) {
-      case types.LOCATE_REQUEST: return Object.assign({}, state, { value: types.LOCATE_REQUEST })
-      case types.LOCATE_SUCCESS: return Object.assign({}, state, { value: types.LOCATE_SUCCESS })
-      case types.LOCATE_FAILURE: return Object.assign({}, state, { value: types.LOCATE_FAILURE, error: payload.error })
-      default: return state
-    }
-  }
+export const reducer = (state = initial, action) => {
+  const { payload, __ns__ } = action
+  const { config, status, docs } = state
 
-  const docs = (state = initial.docs, action) => {
-    const { payload, __ns__ } = action
-    switch(action.type) {
-      case types.INSERT: return [ { ...payload, ns: __ns__, _id: payload._id ? payload._id : cuid() }, ...state ]
-      case types.UPDATE: return state.map((doc) => doc._id === payload._id ? { ...doc, ...payload } :  doc)
-      case types.REMOVE: return state.filter(doc => doc._id !== payload._id)
-      default: return state
-    }
-  }
+  const doStatus  = (value)         => Object.assign({}, { config, docs }, { status: { value }})
+  const doFail    = (value, error)  => Object.assign({}, { config, docs }, { status: { value, error }})
+  const doDocs    = (docs)          => Object.assign({}, { config, status }, { docs })
 
-  return combineReducers({ status, docs })
+  switch (action.type) {
+    case types.LOCATE_REQUEST: return doStatus(types.LOCATE_REQUEST)
+    case types.LOCATE_SUCCESS: return doStatus(types.LOCATE_SUCCESS)
+    case types.LOCATE_FAILURE: return doFail(types.LOCATE_FAILURE, payload.error)
+
+    case types.INSERT: return doDocs([ { ...payload, ns: __ns__, _id: payload._id ? payload._id : cuid() }, ...state.docs ])
+    case types.UPDATE: return doDocs(state.docs.map((doc) => doc._id === payload._id ? { ...doc, ...payload } :  doc))
+    case types.REMOVE: return doDocs(state.docs.filter(doc => doc._id !== payload._id))
+
+    default: return state
+  }
 }
-
-export const reducer = configReducer()
