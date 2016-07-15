@@ -58,6 +58,4 @@ const render = () => ReactDOM.render(
   document.getElementById('root')
 )
 
-
-
 render()

@@ -28,15 +28,21 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 
 injectTapEventPlugin()
 
+import PouchDB              from 'pouchdb'
+
 import { manager }          from 'redux-manager'
 import { locationLocal }    from 'redux-location'
+import { locationPersist }  from 'redux-location'
 
+const service1 = 'location'
 const service2 = 'location2'
 const service3 = 'location3'
 
-locationLocal()
-locationLocal(service2)
-locationLocal(service3)
+locationLocal({ serviceName: service1 })
+locationPersist({ db: PouchDB('redux-location'), serviceList: [service1] })
+
+locationLocal({ serviceName: service2 })
+locationLocal({ serviceName: service3 })
 
 manager.enableLogger(require('redux-logger')())
 const store = manager.getStore()
@@ -44,22 +50,32 @@ const store = manager.getStore()
 import React                from 'react'
 import ReactDOM             from 'react-dom'
 import { Provider }         from 'react-redux'
+import { connect }          from 'react-redux'
 
 import MuiThemeProvider     from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme          from 'material-ui/styles/getMuiTheme'
-import { deepOrange500 }    from 'material-ui/styles/colors'
 
-import Location             from './component/location'
+import { LocationBadge }    from 'redux-location'
+import { LocationButton }   from 'redux-location'
+import { LocationObserver } from 'redux-location'
 
-const muiTheme = getMuiTheme({ palette: { accent1Color: deepOrange500 }})
+const LocationBadge1    = connect(state => ({ location: state[service1] }))(LocationBadge)
+const LocationBadge2    = connect(state => ({ location: state[service2] }))(LocationBadge)
+const LocationBadge3    = connect(state => ({ location: state[service3] }))(LocationBadge)
+const LocationButton3   = connect(state => ({ location: state[service3] }))(LocationButton)
+const LocationObserver3 = connect(state => ({ location: state[service3] }))(LocationObserver)
+
+const muiTheme = getMuiTheme({ palette: { accent1Color: require('material-ui/styles/colors').deepOrange500 }})
 
 const render = () => ReactDOM.render(
   <Provider store={ store }>
     <MuiThemeProvider muiTheme={ muiTheme }>
       <div>
-        <Location />
-        <Location serviceName={ service2 } />
-        <Location serviceName={ service3 } />
+        <LocationBadge1 serviceName={ service1 } />
+        <LocationBadge2   serviceName={ service2 } />
+        <LocationBadge3   serviceName={ service3 } />
+        <LocationButton3  serviceName={ service3 } />
+        <LocationObserver3 />
       </div>
     </MuiThemeProvider>
   </Provider>,
@@ -67,55 +83,29 @@ const render = () => ReactDOM.render(
 )
 
 render()
-store.subscribe(render)
+
 ```
 
-#### component/location.js
+### NODE-API
+`npm run node`
+
 ```js
-import React, { PropTypes } from 'react'
-import { manager }          from 'redux-manager'
-import { locationActions }  from 'redux-location'
-import { locationSelect }   from 'redux-location'
+require('redux-journal').enable()
 
-import Badge                from 'material-ui/Badge'
-import IconButton           from 'material-ui/IconButton'
-import IconMyLocation       from 'material-ui/svg-icons/maps/my-location'
+import { write, error }   from 'redux-journal'
+import { manager }        from 'redux-manager'
+import { locationLocal }  from 'redux-location'
 
-class Location extends React.Component {
-  constructor(props, context) {
-    super(props, context)
-    const { serviceName = 'location' } = props
-    this.state = { serviceName }
-  }
+const api = locationLocal()
 
-  serviceState = () => manager.getStore().getState()[this.state.serviceName]
-  onRequest = () => { manager.dispatch(locationActions.locate(), this.state.serviceName) }
+manager.enableLogger(require('redux-node-logger')())
+manager.getStore()
 
-  render() {
-    const state = this.serviceState()
-    const badgeContent = state ? locationSelect.docsNumber(state) : 0
-
-    return (
-      <Badge
-        {...{ badgeContent }}
-        badgeStyle={ styles.badge }
-        secondary={ true }
-      >
-        <IconButton tooltip='location' onClick={ this.onRequest }>
-          <IconMyLocation />
-        </IconButton>
-      </Badge>
-    )
-  }
-}
-
-Location.propTypes = { serviceName: PropTypes.string }
-
-const styles = {
-  badge: { top: 12, right: 12 }
-}
-
-export default Location
+api.locate().then((position) => {
+  write(position)
+}).catch((e) => {
+  error(e)
+})
 ```
 
 ### PERSIST
@@ -141,28 +131,6 @@ manager.enableLogger(require('redux-node-logger')())
 manager.getStore()
 
 manager.dispatch(locationActions.insert({ lat: 'latitude', lng: 'longitude' }), 'location')
-```
-
-### NODE-API
-`npm run node`
-
-```js
-require('redux-journal').enable()
-
-import { write, error }   from 'redux-journal'
-import { manager }        from 'redux-manager'
-import { locationLocal }  from 'redux-location'
-
-const api = locationLocal()
-
-manager.enableLogger(require('redux-node-logger')())
-manager.getStore()
-
-api.locate().then((position) => {
-  write(position)
-}).catch((e) => {
-  error(e)
-})
 ```
 
 [npm-url]: https://npmjs.org/package/redux-location

@@ -2,21 +2,19 @@ import Promise              from 'bluebird'
 import React, { PropTypes } from 'react'
 import { write, warning }   from 'redux-journal'
 import { manager }          from 'redux-manager'
-import { locationSelect }   from 'redux-location'
-import { locationTypes }    from 'redux-location'
 
 import IconButton           from 'material-ui/IconButton'
 import IconBeenHere         from 'material-ui/svg-icons/maps/beenhere'
 
-const doIsOnceSuccess = () => {
-  let beforeStatus = ''
-  return (status) => {
-    if (status == locationTypes.LOCATE_SUCCESS && beforeStatus != status) {
-      beforeStatus = status
-      return true
-    }
+import { types }            from '../actions'
+import { select }           from '../select'
+
+const doIsOnceSuccess = (beforeStatus = '') => status => {
+  if (status == types.LOCATE_SUCCESS && beforeStatus != status) {
     beforeStatus = status
+    return true
   }
+  beforeStatus = status
 }
 
 class LocationObserver extends React.Component {
@@ -27,8 +25,8 @@ class LocationObserver extends React.Component {
     }
   }
 
-  componentWillReceiveProps() {
-    const location = locationSelect(this.props.location)
+  componentWillReceiveProps(nextProps) {
+    const location = select(nextProps)
     const status = location.status()
     if (this.isOnceSuccess(status)) {
       this.setState({ styleIconButton: styles.success })
