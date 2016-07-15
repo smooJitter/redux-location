@@ -11,6 +11,6 @@ export const configServiceLocal = (
   { serviceName:  SERVICE }
 ) => {
   write(`({ serviceName = '${serviceName}' })`, `${tags}.configServiceLocal`)
-  prepareStore(serviceName)
+  prepareStore({ serviceName })
   return manager.api.set(serviceName, configAPILocal())
 }

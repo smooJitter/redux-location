@@ -31,7 +31,7 @@ class LocationBadge extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     Promise.delay(2000).then(() => {
       const location = locationSelect(this.props.location)
       const doc = location.docs.first()
@@ -65,7 +65,10 @@ class LocationBadge extends React.Component {
   }
 }
 
-LocationBadge.propTypes = { serviceName: PropTypes.string }
+LocationBadge.propTypes = {
+  location:     PropTypes.object.isRequired,
+  serviceName:  PropTypes.string
+}
 
 const styles = {
   badge: { top: 12, right: 12 }

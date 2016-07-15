@@ -60,6 +60,9 @@ class LocationButton extends React.Component {
   }
 }
 
-LocationButton.propTypes = { serviceName: PropTypes.string }
+LocationButton.propTypes = {
+  location:     PropTypes.object.isRequired,
+  serviceName:  PropTypes.string
+}
 
 export default LocationButton

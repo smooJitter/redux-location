@@ -51,6 +51,11 @@ class LocationObserver extends React.Component {
   }
 }
 
+LocationObserver.propTypes = {
+  location: PropTypes.object.isRequired
+}
+
+
 import {
   green100, yellow100
 } from 'material-ui/styles/colors'
