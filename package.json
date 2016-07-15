@@ -1,8 +1,8 @@
 {
   "name": "redux-location",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Redux service to request and store multiple user geolocation",
-  "main": "lib/index.js",
+  "main": "lib",
   "scripts": {
     "compile": "rimraf lib && babel -d lib/ src/",
     "test": "echo \"Error: no test specified\" && exit 1",
