@@ -7,9 +7,12 @@ Redux service to request and store multiple user geolocation
 ![alt tag](https://raw.githubusercontent.com/lokhmakov/redux-location/master/docs/redux-location%20react%20scene%202.gif)
 
 ## FEATURES
-* Service architecture (redux-manager powered)
-* Journaling (redux-journal powered)
-* PouchDB persist state (pouch-redux-middleware powered)
+* Service architecture ([redux-manager](https://github.com/lokhmakov/redux-manager) powered)
+* Journaling ([redux-journal](https://github.com/lokhmakov/redux-journal) powered)
+* Persist state ([PouchDB](https://github.com/pouchdb/pouchdb) powered)
+* Dynamic service configuration (state.config):
+  * docsMax = 2 - maximum docs in state.docs
+  * docsMaxOverRemove: true - remove old locations over docsMax
 
 ## INSTALL
 ### Stable
