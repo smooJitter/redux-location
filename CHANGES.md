@@ -1,6 +1,6 @@
-## 0.0.5
+## 0.0.5, 0.0.6
 
-* [COMPILE] [PUBLISH] 0.0.5
+* [COMPILE] [PUBLISH] 0.0.6
 * [FIX] [SERVICE] local miss parameters for prepareStore
 
 ## 0.0.4

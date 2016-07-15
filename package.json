@@ -1,6 +1,6 @@
 {
   "name": "redux-location",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Redux service to request and store multiple user geolocation",
   "main": "lib",
   "scripts": {
