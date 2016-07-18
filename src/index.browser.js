@@ -1,19 +1,11 @@
-import LocationBadge          from './react/location.badge'
-import { LocationBadge$ }     from './react/location.badge'
+export * from './index.node.js'
 
-import LocationButton         from './react/location.button'
-import { LocationButton$ }    from './react/location.button'
+export LocationBadge        from './react/location.badge'
+export LocationBadge$       from './react/location.badge.src'
 
-import LocationObserver       from './react/location.observer'
-import { LocationObserver$ }  from './react/location.observer'
+export LocationButton       from './react/location.button'
+export LocationButton$      from './react/location.button.src'
 
-export {
-  LocationButton,
-  LocationButton$,
+export LocationObserver     from './react/location.observer'
+export LocationObserver$    from './react/location.observer.src'
 
-  LocationBadge,
-  LocationBadge$,
-
-  LocationObserver,
-  LocationObserver$,
-}
