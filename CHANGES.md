@@ -1,4 +1,4 @@
-## 0.0.7, 0.0.8
+## 0.0.7, 0.0.8, 0.0.9
 
 * [COMPILE] [PUBLISH] 0.0.8
 * [REFACTOR] LocationButton, LocationBadge, LocationObserver
