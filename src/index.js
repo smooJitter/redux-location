@@ -9,10 +9,6 @@ import { saga, configSaga }   from './saga'
 import { select }             from './select'
 import { prepareStore }       from './store'
 
-import LocationBadge          from './react/location.badge'
-import LocationButton         from './react/location.button'
-import LocationObserver       from './react/location.observer'
-
 export {
   actions               as locationActions, actions,
   config                as locationConfig, config,
@@ -25,8 +21,4 @@ export {
   saga                  as locationSaga, saga,
   select                as locationSelect, select,
   types                 as locationTypes, types,
-
-  LocationBadge,
-  LocationButton,
-  LocationObserver
 }

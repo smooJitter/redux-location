@@ -1,5 +1,6 @@
 import Promise              from 'bluebird'
 import React, { PropTypes } from 'react'
+import { connect }          from 'react-redux'
 import { write, warning }   from 'redux-journal'
 import { manager }          from 'redux-manager'
 
@@ -7,7 +8,10 @@ import IconButton           from 'material-ui/IconButton'
 import IconBeenHere         from 'material-ui/svg-icons/maps/beenhere'
 
 import { types }            from '../actions'
+import { TAGS, SERVICE }    from '../config'
 import { select }           from '../select'
+
+const tags = `${TAGS}.react.location.observer`
 
 const doIsOnceSuccess = (beforeStatus = '') => status => {
   if (status == types.LOCATE_SUCCESS && beforeStatus != status) {
@@ -26,7 +30,7 @@ class LocationObserver extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const location = select(nextProps)
+    const location = select(nextProps.location)
     const status = location.status()
     if (this.isOnceSuccess(status)) {
       this.setState({ styleIconButton: styles.success })
@@ -39,8 +43,6 @@ class LocationObserver extends React.Component {
   isOnceSuccess = doIsOnceSuccess()
 
   render() {
-    write('', 'location.observer.render')
-
     return (
       <IconButton style={ this.state.styleIconButton }>
         <IconBeenHere />
@@ -53,7 +55,6 @@ LocationObserver.propTypes = {
   location: PropTypes.object.isRequired
 }
 
-
 import {
   green100, yellow100
 } from 'material-ui/styles/colors'
@@ -63,4 +64,5 @@ const styles = {
   success: { backgroundColor: green100 }
 }
 
-export default LocationObserver
+export { LocationObserver as LocationObserver$ }
+export default connect(state => ({ location: state[SERVICE] }))(LocationObserver)

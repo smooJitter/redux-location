@@ -5,7 +5,7 @@ import { TAGS, SAGA, SERVICE }  from './config'
 import { reducer }              from './reducer'
 import { saga }                 from './saga'
 
-const tags = `${TAGS}.saga`
+const tags = `${TAGS}.store`
 
 export const prepareStore = (
   { serviceName = SERVICE } =

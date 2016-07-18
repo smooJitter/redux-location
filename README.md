@@ -1,5 +1,4 @@
-## redux-location [![NPM version][npm-image]][npm-url] [![Discord][discord-image]][discord-url]
-===============================================================================================
+# redux-location [![NPM version][npm-image]][npm-url] [![Discord][discord-image]][discord-url]
 Redux service to request and store multiple user geolocation
 
 ![alt tag](https://raw.githubusercontent.com/lokhmakov/redux-location/master/docs/redux-location%20react%20scene%201.gif)

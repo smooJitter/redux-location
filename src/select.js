@@ -1,4 +1,11 @@
+import { warning }          from 'redux-journal'
+import { TAGS }             from './config'
+
+const tags = `${TAGS}.select`
+
 export const select = (state) => {
+  if (!state) warning(`state is ${state}`, `${tags}`)
+
   const status = ()      => state.status.value
   const error  = ()      => state.status.error
 

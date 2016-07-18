@@ -1,5 +1,6 @@
 import Promise              from 'bluebird'
 import React, { PropTypes } from 'react'
+import { connect }          from 'react-redux'
 import { write, warning }   from 'redux-journal'
 import { manager }          from 'redux-manager'
 import { locationActions }  from 'redux-location'
@@ -8,7 +9,7 @@ import { locationSelect }   from 'redux-location'
 import IconButton           from 'material-ui/IconButton'
 import IconMyLocation       from 'material-ui/svg-icons/maps/my-location'
 
-import { TAGS }             from '../config'
+import { TAGS, SERVICE }    from '../config'
 
 const tags = `${TAGS}.react.location.button`
 
@@ -22,7 +23,7 @@ const oneDelayedRequest = (delay, callback, promise) =>
 class LocationButton extends React.Component {
   constructor(props, context) {
     super(props, context)
-    const { serviceName = 'location' } = props
+    const { serviceName = SERVICE } = props
     this.state = {
       serviceName,
       textLocation: 'location'
@@ -65,4 +66,5 @@ LocationButton.propTypes = {
   serviceName:  PropTypes.string
 }
 
-export default LocationButton
+export { LocationButton as LocationButton$ }
+export default connect(state => ({ location: state[SERVICE] }))(LocationButton)

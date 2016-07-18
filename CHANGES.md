@@ -1,3 +1,9 @@
+## 0.0.7
+
+* [COMPILE] [PUBLISH] 0.0.7
+* [REFACTOR] LocationButton, LocationBadge, LocationObserver
+* [ADD] src/index.browser.js and package.json browser
+
 ## 0.0.5, 0.0.6
 
 * [COMPILE] [PUBLISH] 0.0.6
