@@ -35,7 +35,7 @@ class LocationBadge extends React.Component {
   }
 
   componentDidMount = () => {
-    manager.dispatch(locationActions.locateDelayed({ check: true, delay: 2000 }), this.state.serviceName)
+    manager.dispatch(locationActions.locate({ check: true, delay: 2000 }), this.state.serviceName)
   }
 
   updateBadge = (payload) => this.setState({ badge: { ...this.state.badge, ...payload }})

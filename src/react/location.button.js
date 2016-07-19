@@ -28,7 +28,7 @@ class LocationButton extends React.Component {
   }
 
   componentDidMount() {
-    manager.dispatch(locationActions.locateDelayed({ check: true, delay: 2000 }), this.state.serviceName)
+    manager.dispatch(locationActions.locate({ check: true, delay: 2000 }), this.state.serviceName)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,7 +40,7 @@ class LocationButton extends React.Component {
   }
 
   onTouchTap = () => {
-    manager.dispatch(locationActions.locateDelayed({ delay: 2000 }), this.state.serviceName)
+    manager.dispatch(locationActions.locate({ delay: 2000 }), this.state.serviceName)
     if (this.props.onTouchTap) this.props.onTouchTap()
   }
 

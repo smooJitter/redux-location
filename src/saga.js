@@ -34,37 +34,34 @@ export const configSaga = () => {
     }
   }
 
-  function *watchLocate() {
-    while (true) {
-      const action = yield take(types.LOCATE)
-      yield fork(locate, action)
-    }
-  }
-
   function *locateDelayed(action) {
     const { __ns__, payload } = action
+    write(`(action: { __ns__: '${__ns__}' })`, `${tags}.*locateDelayed`)
     try {
-      yield put({ __ns__, type: types.LOCATE_DELAYED_REQUEST })
+      yield put({ __ns__, type: types.LOCATE_REQUEST })
       yield call(delay, payload.delay)
       const state = yield selectState(state => state[__ns__])
       const location$ = select(state)
-      if (payload.check ) {
-        if (!location$.docs.length()) {
-          yield call(locate, action)
-        }
-      } else {
-        yield call(locate, action)
+      if (!payload.check || (payload.check && !location$.docs.length())) {
+          const position = yield call(api(__ns__).locate, action.payload)
+          yield put({ __ns__, type: types.INSERT, payload: { ...position }})
       }
+      yield put({ __ns__, type: types.LOCATE_SUCCESS })
     } catch (e) {
       error(e)
       yield put({ __ns__, type: types.LOCATE_FAILURE, payload: { error: e }})
     }
   }
 
-  function *watchLocateDelayed() {
+  function *watchLocate() {
     while (true) {
-      const action = yield take(types.LOCATE_DELAYED)
-      yield fork(locateDelayed, action)
+      const action = yield take(types.LOCATE)
+      const { payload = {} } = action
+      if (payload.delay) {
+        yield fork(locateDelayed, action)
+      } else {
+        yield fork(locate, action)
+      }
     }
   }
 
@@ -72,11 +69,11 @@ export const configSaga = () => {
     const { __ns__ } = action
     write(`(action: { __ns__: '${__ns__}' })`, `${tags}.docsMaxOverRemove`)
     const state = yield selectState(state => state[__ns__])
-    const location = select(state)
-    if (location.config.docsMaxOverRemove()) {
-      const docsMax = location.config.docsMax()
-      const length  = location.docs.length()
-      const last = location.docs.last()
+    const location$ = select(state)
+    if (location$.config.docsMaxOverRemove()) {
+      const docsMax = location$.config.docsMax()
+      const length  = location$.docs.length()
+      const last = location$.docs.last()
       if (length > docsMax) {
         write(`REMOVE ${last._id}`, `${tags}.docsMaxOverRemove`)
         yield put({ __ns__, type: types.REMOVE, payload: { _id: last._id }})
@@ -93,7 +90,6 @@ export const configSaga = () => {
 
   function *root() {
     yield fork(watchLocate)
-    yield fork(watchLocateDelayed)
     yield fork(watchInsert)
   }
 

@@ -13,38 +13,47 @@ import { select }           from '../select'
 
 const tags = `${TAGS}.react.location.observer`
 
-const doIsOnceSuccess = (beforeStatus = '') => status => {
-  if (status == types.LOCATE_SUCCESS && beforeStatus != status) {
-    beforeStatus = status
-    return true
-  }
+const doOnce = (value, beforeStatus = '') => status => {
+  const result = status == value && beforeStatus != status
   beforeStatus = status
+  return result
 }
 
 class LocationObserver extends React.Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      styleIconButton: styles.normal
+      button: {
+        style: styles.normal,
+      },
     }
   }
+
+  isOnceRequest = doOnce(types.LOCATE_REQUEST)
+  isOnceSuccess = doOnce(types.LOCATE_SUCCESS)
+  isOnceFailure = doOnce(types.LOCATE_FAILURE)
+
+  updateButton = payload => this.setState({ button: { ...this.state.button, ...payload }})
 
   componentWillReceiveProps(nextProps) {
     const location = select(nextProps.location)
     const status = location.status()
+
+    if (this.isOnceRequest(status)) this.updateButton({ style: styles.request })
     if (this.isOnceSuccess(status)) {
-      this.setState({ styleIconButton: styles.success })
-      Promise.delay(500).then(() => {
-        this.setState({ styleIconButton: styles.normal })
-      })
+      this.updateButton({ style: styles.success })
+      Promise.delay(2000).then(() => this.updateButton({ style: styles.normal }))
     }
+    if (this.isOnceFailure(status)) this.updateButton({ style: styles.failure })
   }
 
-  isOnceSuccess = doIsOnceSuccess()
-
   render() {
+    const {
+      button
+    } = this.state
+
     return (
-      <IconButton style={ this.state.styleIconButton }>
+      <IconButton { ...button }>
         <IconBeenHere />
       </IconButton>
     )
@@ -56,12 +65,14 @@ LocationObserver.propTypes = {
 }
 
 import {
-  green100, yellow100
+  cyan100, green100, red100, yellow100
 } from 'material-ui/styles/colors'
 
 const styles = {
-  normal:  { backgroundColor: yellow100 },
-  success: { backgroundColor: green100 }
+  normal:  { backgroundColor: cyan100 },
+  request: { backgroundColor: yellow100 },
+  success: { backgroundColor: green100 },
+  failure: { backgroundColor: red100 }
 }
 
 export default LocationObserver
