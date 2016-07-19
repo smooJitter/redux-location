@@ -25,7 +25,11 @@ class LocationButton extends React.Component {
     const { serviceName = SERVICE } = props
     this.state = {
       serviceName,
-      textLocation: 'location'
+
+      button: {
+        tooltip: 'location',
+        tooltipPosition: 'bottom-left',
+      },
     }
   }
 
@@ -53,7 +57,7 @@ class LocationButton extends React.Component {
   render() {
     write(``, `${tags}.render`)
     return (
-      <IconButton tooltip={ this.state.textLocation } onClick={ this.request }>
+      <IconButton { ...{ ...this.state.button, ...this.props }} >
         <IconMyLocation />
       </IconButton>
     )
@@ -66,4 +70,3 @@ LocationButton.propTypes = {
 }
 
 export default LocationButton
-

@@ -1,3 +1,8 @@
+## 0.0.10
+
+* [COMPILE] [PUBLISH] 0.0.10
+* [ADD] location.button pass props inside IconButton
+
 ## 0.0.7, 0.0.8, 0.0.9
 
 * [COMPILE] [PUBLISH] 0.0.9
