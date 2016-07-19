@@ -1,6 +1,6 @@
 {
   "name": "redux-location",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Redux service to request and store multiple user geolocation",
   "scripts": {
     "compile": "rimraf lib && babel -d lib/ src/",

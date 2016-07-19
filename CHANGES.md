@@ -1,3 +1,8 @@
+## 0.0.14
+
+* [COMPILE] [PUBLISH] 0.0.14
+* [ADD] location.button onTouchTap from props
+
 ## 0.0.13
 
 * [COMPILE] [PUBLISH] 0.0.13

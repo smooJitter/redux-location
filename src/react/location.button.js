@@ -29,7 +29,7 @@ class LocationButton extends React.Component {
       button: {
         tooltip: 'location',
         tooltipPosition: this.props.tooltipPosition || 'bottom-left',
-        onTouchTap: this.request,
+        onTouchTap: this.onTouchTap,
       },
     }
   }
@@ -50,6 +50,11 @@ class LocationButton extends React.Component {
     }
   }
 
+  onTouchTap = () => {
+    this.request()
+    if (this.props.onTouchTap) this.props.onTouchTap()
+  }
+
   request = oneDelayedRequest(2000, () => {
     this.setState({ newProduct: {} })
     manager.dispatch(locationActions.locate(), this.state.serviceName)
@@ -66,9 +71,10 @@ class LocationButton extends React.Component {
 }
 
 LocationButton.propTypes = {
-  location:     PropTypes.object.isRequired,
-  serviceName:  PropTypes.string,
-  tooltipPosition: PropTypes.string,
+  location:         PropTypes.object.isRequired,
+  serviceName:      PropTypes.string,
+  tooltipPosition:  PropTypes.string,
+  onTouchTap:       PropTypes.func,
 }
 
 export default LocationButton

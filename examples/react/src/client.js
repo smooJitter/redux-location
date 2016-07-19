@@ -1,16 +1,15 @@
+require('react-tap-event-plugin')()
 require('redux-journal').enable()
 
-import injectTapEventPlugin from 'react-tap-event-plugin'
-
-injectTapEventPlugin()
+import { write }            from 'redux-journal'
 
 import PouchDB              from 'pouchdb'
-
-import { manager }          from 'redux-manager'
 import { locationConfig }   from 'redux-location'
 
 require('redux-location').locationLocal()
-require('redux-location').locationPersist({ db: PouchDB('redux-location'), serviceList: [locationConfig.SERVICE] })
+require('redux-location').locationPersist({ db: PouchDB(locationConfig.SERVICE), serviceList: [locationConfig.SERVICE] })
+
+import { manager }          from 'redux-manager'
 
 manager.enableLogger(require('redux-logger')())
 const store = manager.getStore()
@@ -28,12 +27,18 @@ import { LocationObserver } from 'redux-location'
 
 const muiTheme = getMuiTheme({ palette: { accent1Color: require('material-ui/styles/colors').deepOrange500 }})
 
+const tags = `${locationConfig.TAGS}.examples.react.client`
+
+const onTouchTap = () => {
+  write(``, `${tags}.onTouchTap`)
+}
+
 const render = () => ReactDOM.render(
   <Provider store={ store }>
     <MuiThemeProvider muiTheme={ muiTheme }>
       <div>
         <LocationBadge/>
-        <LocationButton/>
+        <LocationButton { ...{ onTouchTap } } />
         <LocationObserver/>
       </div>
     </MuiThemeProvider>
