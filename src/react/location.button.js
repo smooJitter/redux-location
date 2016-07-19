@@ -29,6 +29,7 @@ class LocationButton extends React.Component {
       button: {
         tooltip: 'location',
         tooltipPosition: this.props.tooltipPosition || 'bottom-left',
+        onTouchTap: this.request,
       },
     }
   }

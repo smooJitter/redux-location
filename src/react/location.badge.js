@@ -26,8 +26,18 @@ class LocationBadge extends React.Component {
     const { serviceName = SERVICE } = props
     const location = locationSelect(props.location)
     this.state = {
-      badgeContent: 0,
-      serviceName
+      serviceName,
+
+      badge: {
+        badgeContent: 0,
+        badgeStyle: styles.badge,
+        secondary: true,
+      },
+
+      button: {
+        tooltip: 'location',
+        onTouchTap: this.request,
+      },
     }
   }
 
@@ -39,11 +49,12 @@ class LocationBadge extends React.Component {
     })
   }
 
+  updateBadge = (payload) => this.setState({ badge: { ...this.state.badge, ...payload }})
+
   componentWillReceiveProps(nextProps) {
-    const location = locationSelect(nextProps.location)
-    if (location) {
-      this.setState({ badgeContent: location.docs.length() })
-    }
+    const location$ = locationSelect(nextProps.location)
+    const badgeContent = location$.docs.length()
+    this.updateBadge({ badgeContent })
   }
 
   request = oneDelayedRequest(2000, () => {
@@ -51,13 +62,14 @@ class LocationBadge extends React.Component {
   })
 
   render() {
+    const {
+      badge,
+      button
+    } = this.state
+
     return (
-      <Badge
-        badgeContent={ this.state.badgeContent }
-        badgeStyle={ styles.badge }
-        secondary={ true }
-      >
-        <IconButton tooltip='location' onClick={ this.request }>
+      <Badge { ...badge }>
+        <IconButton { ...button }>
           <IconMyLocation />
         </IconButton>
       </Badge>

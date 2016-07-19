@@ -1,3 +1,8 @@
+## 0.0.13
+
+* [COMPILE] [PUBLISH] 0.0.13
+* [FIX] location.button onTouchTap
+
 ## 0.0.12
 
 * [COMPILE] [PUBLISH] 0.0.10, 0.0.11, 0.0.12

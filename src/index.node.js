@@ -10,15 +10,15 @@ import { select }             from './select'
 import { prepareStore }       from './store'
 
 export {
-  actions               as locationActions, actions,
-  config                as locationConfig, config,
-  configAPILocal        as locationConfigAPILocal, configAPILocal,
-  configPersist         as locationPersist, configPersist,
-  configServiceLocal    as locationLocal, configServiceLocal,
-  configSaga            as locationConfigureSaga, configSaga,
-  prepareStore          as locationPrepareStore, prepareStore,
-  reducer               as locationReducer, reducer,
-  saga                  as locationSaga, saga,
-  select                as locationSelect, select,
-  types                 as locationTypes, types,
+  actions               as locationActions,
+  config                as locationConfig,
+  configAPILocal        as locationConfigAPILocal,
+  configPersist         as locationPersist,
+  configServiceLocal    as locationLocal,
+  configSaga            as locationConfigureSaga,
+  prepareStore          as locationPrepareStore,
+  reducer               as locationReducer,
+  saga                  as locationSaga,
+  select                as locationSelect,
+  types                 as locationTypes,
 }
