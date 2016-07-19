@@ -1,5 +1,6 @@
 import { write, error }           from 'redux-journal'
 import { manager }                from 'redux-manager'
+import { delay }                  from 'redux-saga'
 import { call, fork, put, take }  from 'redux-saga/effects'
 import { select as selectState }  from 'redux-saga/effects'
 import { types }                  from './actions'
@@ -40,6 +41,33 @@ export const configSaga = () => {
     }
   }
 
+  function *locateDelayed(action) {
+    const { __ns__, payload } = action
+    try {
+      yield put({ __ns__, type: types.LOCATE_DELAYED_REQUEST })
+      yield call(delay, payload.delay)
+      const state = yield selectState(state => state[__ns__])
+      const location$ = select(state)
+      if (payload.check ) {
+        if (!location$.docs.length()) {
+          yield call(locate, action)
+        }
+      } else {
+        yield call(locate, action)
+      }
+    } catch (e) {
+      error(e)
+      yield put({ __ns__, type: types.LOCATE_FAILURE, payload: { error: e }})
+    }
+  }
+
+  function *watchLocateDelayed() {
+    while (true) {
+      const action = yield take(types.LOCATE_DELAYED)
+      yield fork(locateDelayed, action)
+    }
+  }
+
   function *docsMaxOverRemove(action) {
     const { __ns__ } = action
     write(`(action: { __ns__: '${__ns__}' })`, `${tags}.docsMaxOverRemove`)
@@ -65,6 +93,7 @@ export const configSaga = () => {
 
   function *root() {
     yield fork(watchLocate)
+    yield fork(watchLocateDelayed)
     yield fork(watchInsert)
   }
 

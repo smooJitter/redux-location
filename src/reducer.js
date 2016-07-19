@@ -19,6 +19,8 @@ export const reducer = (state = initial, action) => {
   const doDocs    = (docs)          => Object.assign({}, { config, status }, { docs })
 
   switch (action.type) {
+    case types.LOCATE_DELAYED_REQUEST: return doStatus(types.LOCATE_DELAYED_REQUEST)
+
     case types.LOCATE_REQUEST: return doStatus(types.LOCATE_REQUEST)
     case types.LOCATE_SUCCESS: return doStatus(types.LOCATE_SUCCESS)
     case types.LOCATE_FAILURE: return doFail(types.LOCATE_FAILURE, payload.error)

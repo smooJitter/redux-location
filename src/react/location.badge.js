@@ -13,13 +13,6 @@ import { TAGS, SERVICE }    from '../config'
 
 const tags = `${TAGS}.react.location.badge`
 
-const oneDelayedRequest = (delay, callback, promise) =>
-  () => promise = promise ? promise : Promise.delay(delay)
-    .then(() => {
-      callback()
-      promise = undefined
-    })
-
 class LocationBadge extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -42,11 +35,7 @@ class LocationBadge extends React.Component {
   }
 
   componentDidMount = () => {
-    Promise.delay(2000).then(() => {
-      const location = locationSelect(this.props.location)
-      const doc = location.docs.first()
-      if (!doc) this.request()
-    })
+    manager.dispatch(locationActions.locateDelayed({ check: true, delay: 2000 }), this.state.serviceName)
   }
 
   updateBadge = (payload) => this.setState({ badge: { ...this.state.badge, ...payload }})
@@ -56,10 +45,6 @@ class LocationBadge extends React.Component {
     const badgeContent = location$.docs.length()
     this.updateBadge({ badgeContent })
   }
-
-  request = oneDelayedRequest(2000, () => {
-    manager.dispatch(locationActions.locate(), this.state.serviceName)
-  })
 
   render() {
     const {

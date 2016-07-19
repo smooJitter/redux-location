@@ -12,13 +12,6 @@ import { TAGS, SERVICE }    from '../config'
 
 const tags = `${TAGS}.react.location.button`
 
-const oneDelayedRequest = (delay, callback, promise) =>
-  () => promise = promise ? promise : Promise.delay(delay)
-    .then(() => {
-      callback()
-      promise = undefined
-    })
-
 class LocationButton extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -35,11 +28,7 @@ class LocationButton extends React.Component {
   }
 
   componentDidMount() {
-    Promise.delay(2000).then(() => {
-      const location = locationSelect(this.props.location)
-      const doc = location.docs.first()
-      if (!doc) this.request()
-    })
+    manager.dispatch(locationActions.locateDelayed({ check: true, delay: 2000 }), this.state.serviceName)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,14 +40,9 @@ class LocationButton extends React.Component {
   }
 
   onTouchTap = () => {
-    this.request()
+    manager.dispatch(locationActions.locateDelayed({ delay: 2000 }), this.state.serviceName)
     if (this.props.onTouchTap) this.props.onTouchTap()
   }
-
-  request = oneDelayedRequest(2000, () => {
-    this.setState({ newProduct: {} })
-    manager.dispatch(locationActions.locate(), this.state.serviceName)
-  })
 
   render() {
     write(``, `${tags}.render`)

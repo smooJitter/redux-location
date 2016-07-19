@@ -1,3 +1,8 @@
+## 0.0.15
+
+* [COMPILE] [PUBLISH] 0.0.15
+* [ADD] [SAGA] LOCATE_DELAYED with delay and check options
+
 ## 0.0.14
 
 * [COMPILE] [PUBLISH] 0.0.14
