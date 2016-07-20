@@ -6,7 +6,7 @@ import { locationLocal }  from 'redux-location'
 
 const api = locationLocal()
 
-manager.enableLogger(require('redux-node-logger')())
+//manager.enableLogger(require('redux-node-logger')())
 manager.getStore()
 
 api.locate().then((position) => {

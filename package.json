@@ -1,6 +1,6 @@
 {
   "name": "redux-location",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Redux service to request and store multiple user geolocation",
   "scripts": {
     "compile": "rimraf lib && babel -d lib/ src/",
@@ -32,12 +32,12 @@
     "detect-node": "^2.0.3",
     "react": "^15.2.1",
     "redux": "^3.5.2",
-    "redux-journal": "latest",
-    "redux-manager": "latest",
+    "redux-journal": "0.0.5",
+    "redux-manager": "0.0.5",
     "redux-saga": "^0.11.0"
   },
   "devDependencies": {
-    "babel-core": "^6.10.4",
+    "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
     "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
